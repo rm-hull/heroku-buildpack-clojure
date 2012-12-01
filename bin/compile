@@ -8,6 +8,18 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
+. bin/java
+
+if [ -f ${BUILD_DIR}/system.properties ]; then
+  javaVersion=$(detect_java_version ${BUILD_DIR})
+  echo -n "-----> Installing OpenJDK ${javaVersion}..."
+  install_java ${BUILD_DIR} ${javaVersion}
+  jdk_overlay ${BUILD_DIR}
+  echo "done"
+  cp ${BUILD_DIR}/system.properties ${CACHE_DIR}/
+fi
+
 # Determine Leiningen version
 if [ "$(grep ":min-lein-version[[:space:]]\+\"2" $1/project.clj)" != "" ]; then
   LEIN_VERSION="2.0.0-preview10"
@@ -72,15 +84,6 @@ if [ -d $CACHE_STORE_DIR ]; then
   cp -r $CACHE_STORE_DIR $CACHE_TARGET_DIR
 else
   mkdir -p $CACHE_TARGET_DIR
-fi
-
-if [ -f ${BUILD_DIR}/system.properties ]; then
-  javaVersion=$(detect_java_version ${BUILD_DIR})
-  echo -n "-----> Installing OpenJDK ${javaVersion}..."
-  install_java ${BUILD_DIR} ${javaVersion}
-  jdk_overlay ${BUILD_DIR}
-  echo "done"
-  cp ${BUILD_DIR}/system.properties ${CACHE_DIR}/
 fi
 
 echo "-----> Building with Leiningen"
