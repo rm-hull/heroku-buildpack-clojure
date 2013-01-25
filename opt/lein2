@@ -39,7 +39,7 @@ if [ "$INPUT_CHECKSUM" != "" ] && [ -r "$TRAMPOLINE_FILE" ]; then
 else
     export TRAMPOLINE_FILE
     $LEIN_JAVA_CMD \
-        -client -XX:+TieredCompilation \
+        -server -XX:+TieredCompilation \
         $LEIN_JVM_OPTS \
         -Dfile.encoding=UTF-8 \
         -Dmaven.wagon.http.ssl.easy=false \
