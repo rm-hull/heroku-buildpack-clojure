@@ -131,12 +131,7 @@ mkdir -p $(dirname $PROFILE_PATH)
 
 echo "export JVM_OPTS=\"\${JVM_OPTS:--Xmx400m}\"" >> $PROFILE_PATH
 echo "export LEIN_NO_DEV=\"\${LEIN_NO_DEV:-yes}\"" >> $PROFILE_PATH
-<<<<<<< HEAD
-echo "export JAVA_HOME=\"\$HOME/.jdk\"" >> $PROFILE_PATH
-echo "export PATH=\"\$HOME/.jdk/bin:$PATH:\$HOME/.lein/bin\"" >> $PROFILE_PATH
-=======
 echo "export PATH=\"$HOME/.jdk/bin:$PATH:\$HOME/.lein/bin\"" >> $PROFILE_PATH
->>>>>>> 82f5e83e9205c50a10fc420b08bc8f081f778ef5
 
 # default Procfile
 if [ ! -r $1/Procfile ]; then
