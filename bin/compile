@@ -38,7 +38,7 @@ export PATH="$HOME/.jdk/bin:$PATH"
 
 # Determine Leiningen version
 if [ "$(grep ":min-lein-version[[:space:]]\+\"2" $1/project.clj)" != "" ]; then
-  LEIN_VERSION="2.0.0"
+  LEIN_VERSION="2.1.1"
   LEIN_BIN_SOURCE="$(dirname $0)/../opt/lein2"
   LEIN_BUILD_TASK=${LEIN_BUILD_TASK:-"with-profile production compile :all"}
 else
@@ -52,7 +52,7 @@ else
 fi
 
 # install leiningen jar
-LEIN_JAR_URL="https://heroku-buildpack-clojure.s3.amazonaws.com/leiningen-$LEIN_VERSION-standalone.jar"
+LEIN_JAR_URL="https://leiningen.s3.amazonaws.com/downloads/leiningen-$LEIN_VERSION-standalone.jar"
 LEIN_JAR_PATH="$CACHE_DIR/leiningen-$LEIN_VERSION-standalone.jar"
 
 if [ ! -r "$LEIN_JAR_PATH" ]; then
